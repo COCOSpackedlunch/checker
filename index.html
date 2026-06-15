@@ -35,6 +35,8 @@ th{color:#9a9085;font-weight:700;font-family:var(--mono);font-size:11px;}
 <p class="lead">QRコードをカメラに映すだけで自動判定します。ファイルの読み込みは不要です。</p>
 <div class="card">
 <strong style="font-size:14px;">QRコードをカメラに映してください</strong>
+<button id="btnStart" onclick="startCamera()" style="display:block;width:100%;padding:14px;margin-top:12px;border:none;border-radius:8px;font-size:16px;font-weight:800;cursor:pointer;background:#c4622d;color:#fff;">?? カメラを起動する</button>
+<button id="btnStop" onclick="stopCamera()" style="display:none;width:100%;padding:14px;margin-top:12px;border:none;border-radius:8px;font-size:16px;font-weight:800;cursor:pointer;background:#9a9085;color:#fff;">? カメラを停止する</button>
 <div id="reader"></div>
 <div class="result" id="resultBox">
 <div id="resultMain"></div>
@@ -51,8 +53,8 @@ th{color:#9a9085;font-weight:700;font-family:var(--mono);font-size:11px;}
 </div>
 </div>
 <script>
-const CODES = ["NR74BR","3ARV7F","7BM9CV","MU7VUB"];
-const STORAGE_KEY = 'checker_202606151123';
+const CODES = ["AJEE95","NR96BN","ZHVPFG","EZNEBA"];
+const STORAGE_KEY = 'checker_202606151129';
 function loadRecords(){
   const saved = localStorage.getItem(STORAGE_KEY);
   if(saved) return JSON.parse(saved);
@@ -104,12 +106,27 @@ function onScanSuccess(text){
     updateCounter();
   }
 }
-const scanner = new Html5Qrcode('reader');
-Html5Qrcode.getCameras().then(devices => {
-  if(devices && devices.length){
-    scanner.start(devices[devices.length-1].id, {fps:10, qrbox:220}, onScanSuccess, ()=>{});
+let scanner = null;
+function startCamera(){
+  document.getElementById('btnStart').style.display='none';
+  document.getElementById('btnStop').style.display='block';
+  scanner = new Html5Qrcode('reader');
+  Html5Qrcode.getCameras().then(devices => {
+    if(devices && devices.length){
+      scanner.start(devices[devices.length-1].id, {fps:10, qrbox:220}, onScanSuccess, ()=>{});
+    }
+  }).catch(err => { console.error(err); });
+}
+function stopCamera(){
+  if(scanner){
+    scanner.stop().then(() => {
+      scanner = null;
+      document.getElementById('reader').innerHTML='';
+      document.getElementById('btnStart').style.display='block';
+      document.getElementById('btnStop').style.display='none';
+    });
   }
-}).catch(err => { console.error(err); });
+}
 renderTable();
 updateCounter();
 </script>
