@@ -35,8 +35,8 @@ th{color:#9a9085;font-weight:700;font-family:var(--mono);font-size:11px;}
 <p class="lead">QRコードをカメラに映すだけで自動判定します。ファイルの読み込みは不要です。</p>
 <div class="card">
 <strong style="font-size:14px;">QRコードをカメラに映してください</strong>
-<button id="btnStart" onclick="startCamera()" style="display:block;width:100%;padding:14px;margin-top:12px;border:none;border-radius:8px;font-size:16px;font-weight:800;cursor:pointer;background:#c4622d;color:#fff;">?? カメラを起動する</button>
-<button id="btnStop" onclick="stopCamera()" style="display:none;width:100%;padding:14px;margin-top:12px;border:none;border-radius:8px;font-size:16px;font-weight:800;cursor:pointer;background:#9a9085;color:#fff;">? カメラを停止する</button>
+<button id="btnStart" onclick="startCamera()" style="display:block;width:100%;padding:14px;margin-top:12px;border:none;border-radius:8px;font-size:16px;font-weight:800;cursor:pointer;background:#c4622d;color:#fff;">カメラを起動する</button>
+<button id="btnStop" onclick="stopCamera()" style="display:none;width:100%;padding:14px;margin-top:12px;border:none;border-radius:8px;font-size:16px;font-weight:800;cursor:pointer;background:#9a9085;color:#fff;">カメラを停止する</button>
 <div id="reader"></div>
 <div class="result" id="resultBox">
 <div id="resultMain"></div>
@@ -53,8 +53,8 @@ th{color:#9a9085;font-weight:700;font-family:var(--mono);font-size:11px;}
 </div>
 </div>
 <script>
-const CODES = ["AJEE95","NR96BN","ZHVPFG","EZNEBA"];
-const STORAGE_KEY = 'checker_202606151129';
+const CODES = ["3XXJGB","RR6JRM","TPESKF","7D7HFB"];
+const STORAGE_KEY = 'checker_202606151132';
 function loadRecords(){
   const saved = localStorage.getItem(STORAGE_KEY);
   if(saved) return JSON.parse(saved);
