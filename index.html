@@ -29,6 +29,14 @@ th{color:#9a9085;font-weight:700;font-family:var(--mono);font-size:11px;}
 </style>
 </head>
 <body>
+<div id="loginScreen" style="max-width:360px;margin:80px auto;padding:32px 24px;background:#fff;border:1px solid #d8cfc0;border-radius:12px;text-align:center;">
+<h2 style="font-size:20px;font-weight:800;margin:0 0 8px;">割引券QRチェッカー</h2>
+<p style="font-size:13px;color:#6b6258;margin:0 0 20px;">パスワードを入力してください</p>
+<input id="pwInput" type="password" placeholder="パスワード" style="width:100%;padding:12px;font-size:16px;border:1px solid #d8cfc0;border-radius:8px;box-sizing:border-box;margin-bottom:12px;" onkeydown="if(event.key==='Enter')checkPw()"/>
+<button onclick="checkPw()" style="width:100%;padding:14px;background:#c4622d;color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:800;cursor:pointer;">入力する</button>
+<p id="pwError" style="color:#b3392f;font-size:13px;margin-top:10px;display:none;">パスワードが違います</p>
+</div>
+<div id="mainScreen" style="display:none;">
 <div class="wrap">
 <div class="eyebrow">Lunch Sale / On-site Checker</div>
 <h1>割引券QRチェッカー（当日用）</h1>
@@ -52,9 +60,20 @@ th{color:#9a9085;font-weight:700;font-family:var(--mono);font-size:11px;}
 </table>
 </div>
 </div>
+</div>
 <script>
-const CODES = ["FBNCTR","8SJTAJ","N2CGH6","HRQQ9K"];
-const STORAGE_KEY = 'checker_202606151533';
+const PASSWORD = 'TPUcocos';
+function checkPw(){
+  const input = document.getElementById('pwInput').value;
+  if(input === PASSWORD){
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('mainScreen').style.display='block';
+  } else {
+    document.getElementById('pwError').style.display='block';
+  }
+}
+const CODES = ["20260630-XTBPNR","20260630-9TQ87B","20260630-MGNBMW","20260630-GNEG8H"];
+const STORAGE_KEY = 'checker_202606151642';
 function loadRecords(){
   const saved = localStorage.getItem(STORAGE_KEY);
   if(saved) return JSON.parse(saved);
