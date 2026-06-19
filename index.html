@@ -33,7 +33,7 @@ th{color:#9a9085;font-weight:700;font-family:var(--mono);font-size:11px;}
 <h2 style="font-size:20px;font-weight:800;margin:0 0 8px;">割引券QRチェッカー</h2>
 <p style="font-size:13px;color:#6b6258;margin:0 0 20px;">パスワードを入力してください</p>
 <input id="pwInput" type="password" placeholder="パスワード" style="width:100%;padding:12px;font-size:16px;border:1px solid #d8cfc0;border-radius:8px;box-sizing:border-box;margin-bottom:12px;" onkeydown="if(event.key==='Enter')checkPw()"/>
-<button onclick="checkPw()" style="width:100%;padding:14px;background:#c4622d;color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:800;cursor:pointer;">入力する</button>
+<button onclick="checkPw()" style="width:100%;padding:14px;background:#c4622d;color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:800;cursor:pointer;">決定</button>
 <p id="pwError" style="color:#b3392f;font-size:13px;margin-top:10px;display:none;">パスワードが違います</p>
 </div>
 <div id="mainScreen" style="display:none;">
@@ -72,8 +72,8 @@ function checkPw(){
     document.getElementById('pwError').style.display='block';
   }
 }
-const CODES = ["20260630-8R8GPT","20260630-4GDVMM","20260630-UXEJJT","20260630-QKY685"];
-const STORAGE_KEY = 'checker_202606191501';
+const CODES = ["20260630-W4YG4H","20260630-KVBY96","20260630-D2PDUQ","20260630-P7EA84"];
+const STORAGE_KEY = 'checker_202606191521';
 function loadRecords(){
   const saved = localStorage.getItem(STORAGE_KEY);
   if(saved) return JSON.parse(saved);
@@ -98,6 +98,15 @@ function renderTable(){
 function updateCounter(){
   const used = records.filter(r => r.used).length;
   document.getElementById('counter').textContent = '使用済み: ' + used + ' / ' + records.length + ' 件';
+}
+function toggleUsed(code){
+  const rec = records.find(r => r.code === code);
+  if(rec){
+    rec.used = !rec.used;
+    saveRecords();
+    renderTable();
+    updateCounter();
+  }
 }
 let lastCode = null, lastTime = 0;
 function onScanSuccess(text){
@@ -124,15 +133,6 @@ function onScanSuccess(text){
     main.textContent = '手続き完了';
     saveRecords();
     sub.textContent = 'コード: ' + rec.code + ' を使用済みにしました';
-    renderTable();
-    updateCounter();
-  }
-}
-function toggleUsed(code){
-  const rec = records.find(r => r.code === code);
-  if(rec){
-    rec.used = !rec.used;
-    saveRecords();
     renderTable();
     updateCounter();
   }
