@@ -55,7 +55,7 @@ th{color:#9a9085;font-weight:700;font-family:var(--mono);font-size:11px;}
 <div class="card">
 <strong style="font-size:14px;">一覧（現在の状態）</strong>
 <table>
-<thead><tr><th>コード</th><th>状態</th><th>操作</th></tr></thead>
+<thead><tr><th>コード</th><th>状態</th></tr></thead>
 <tbody id="tableBody"></tbody>
 </table>
 </div>
@@ -72,8 +72,8 @@ function checkPw(){
     document.getElementById('pwError').style.display='block';
   }
 }
-const CODES = ["20260630-DXMFP7","20260630-HXN4SD","20260630-T4GJQQ","20260630-X9S49D"];
-const STORAGE_KEY = 'checker_202606191028';
+const CODES = ["20260625-TFQURH","20260625-K8Y375","20260625-8W57MV","20260625-HE56VS"];
+const STORAGE_KEY = 'checker_202606191049';
 function loadRecords(){
   const saved = localStorage.getItem(STORAGE_KEY);
   if(saved) return JSON.parse(saved);
@@ -88,10 +88,7 @@ function renderTable(){
   tbody.innerHTML = '';
   records.forEach(r => {
     const tr = document.createElement('tr');
-    const btn = r.used
-      ? '<button onclick="toggleUsed(''' + r.code + ''')" style="padding:4px 8px;font-size:11px;border:none;border-radius:4px;cursor:pointer;background:#9a9085;color:#fff;">未使用に戻す</button>'
-      : '<button onclick="toggleUsed(''' + r.code + ''')" style="padding:4px 8px;font-size:11px;border:none;border-radius:4px;cursor:pointer;background:#c4622d;color:#fff;">使用済みにする</button>';
-    tr.innerHTML = '<td>' + r.code + '</td><td class="' + (r.used ? 'tagused' : 'tagok') + '">' + (r.used ? '使用済み' : '未使用') + '</td><td>' + btn + '</td>';
+    tr.innerHTML = '<td>' + r.code + '</td><td class="' + (r.used ? 'tagused' : 'tagok') + '">' + (r.used ? '使用済み' : '未使用') + '</td>';
     tbody.appendChild(tr);
   });
 }
@@ -124,15 +121,6 @@ function onScanSuccess(text){
     main.textContent = '手続き完了';
     saveRecords();
     sub.textContent = 'コード: ' + rec.code + ' を使用済みにしました';
-    renderTable();
-    updateCounter();
-  }
-}
-function toggleUsed(code){
-  const rec = records.find(r => r.code === code);
-  if(rec){
-    rec.used = !rec.used;
-    saveRecords();
     renderTable();
     updateCounter();
   }
